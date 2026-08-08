@@ -15,5 +15,5 @@ Options:
   --help                         Show help.
   --version <version label>      Select the first matching historical version.
   --file <exact file name>       Download only the first matching file.
-  --download <directory>         Download the specified directory.
+  --download <directory>         Download to the specified directory.
 ```
