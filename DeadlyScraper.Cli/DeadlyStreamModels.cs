@@ -9,6 +9,7 @@ public sealed class DeadlyStreamFileMetadata
     [JsonIgnore]
     public string? DownloadPageUrl { get; init; }
     public string? Title { get; init; }
+    public string? Author { get; init; }
     public string? LatestVersion { get; init; }
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? SelectedVersion { get; init; }

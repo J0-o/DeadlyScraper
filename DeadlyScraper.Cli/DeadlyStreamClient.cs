@@ -27,6 +27,10 @@ public sealed class DeadlyStreamClient
         "<meta[^>]+property=[\"']og:title[\"'][^>]+content=[\"'](?<value>[^\"']+)[\"']",
         RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.Compiled);
 
+    private static readonly Regex AuthorRegex = new(
+        "\"author\"\\s*:\\s*\\{.*?\"name\"\\s*:\\s*\"(?<value>[^\"]+)\"",
+        RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.Compiled);
+
     private static readonly Regex DocumentTitleRegex = new(
         "<title>(?<value>.*?)</title>",
         RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.Compiled);
@@ -121,6 +125,7 @@ public sealed class DeadlyStreamClient
             SourceUrl = metadata.SourceUrl,
             DownloadPageUrl = downloadPageUri.ToString(),
             Title = metadata.Title,
+            Author = metadata.Author,
             LatestVersion = metadata.LatestVersion,
             SelectedVersion = version.VersionLabel,
             LatestVersionReleaseDate = metadata.LatestVersionReleaseDate,
@@ -167,6 +172,7 @@ public sealed class DeadlyStreamClient
             SourceUrl = filePageUri.GetLeftPart(UriPartial.Path),
             DownloadPageUrl = downloadPageUri.ToString(),
             Title = ExtractTitle(html),
+            Author = FirstGroupValue(AuthorRegex, html, "value"),
             LatestVersion = ExtractCurrentVersion(html),
             LatestVersionReleaseDate = currentVersionReleaseDate,
             OriginalUploadDate = submittedDate,
