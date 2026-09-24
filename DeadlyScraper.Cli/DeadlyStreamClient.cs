@@ -661,7 +661,9 @@ public sealed class DeadlyStreamClient
                query.ContainsKey("confirm") ||
                query.ContainsKey("version") ||
                string.Equals(query.GetValueOrDefault("do"), "download", StringComparison.OrdinalIgnoreCase) ||
-               candidateUri.AbsolutePath.Contains("download", StringComparison.OrdinalIgnoreCase);
+               candidateUri.Segments.Any(segment =>
+                   string.Equals(segment.Trim('/'), "download", StringComparison.OrdinalIgnoreCase) ||
+                   string.Equals(segment.Trim('/'), "downloads", StringComparison.OrdinalIgnoreCase));
     }
 
     private static List<DeadlyStreamDownloadOption> DeduplicateOptions(IEnumerable<DeadlyStreamDownloadOption> options)
